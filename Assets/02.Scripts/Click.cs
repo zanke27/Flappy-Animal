@@ -8,7 +8,7 @@ public class Click : MonoBehaviour
 
     private Rigidbody2D rb2D = null;
 
-    public float jumpPower = 10f;
+    [SerializeField] private float jumpPower = 7.5f;
 
     private void Awake()
     {
@@ -19,14 +19,18 @@ public class Click : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            rb2D.velocity = Vector2.up * jumpPower;
             if (rb2D.velocity.y >= 0)
             {
-                rb2D.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+                rb2D.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             }
             else
             {
-                rb2D.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-            }     
+                rb2D.velocity = Vector2.up * jumpPower;
+                //rb2D.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            }
+            if (rb2D.velocity.y > 10)
+                rb2D.velocity = new Vector2(rb2D.velocity.x, 10);
         }
     }
 }
